@@ -14,38 +14,25 @@
     </thead>
     <tbody>
     <tr>
-        <div sec:authorize="hasAuthority('ADMIN')">
-            <th>ID</th>
-        </div>
+        <th>ID</th>
         <th>Username</th>
         <th>Password</th>
-        <div sec:authorize="hasAuthority('ADMIN')">
-            <th>Roles</th>
-        </div>
+        <th>Roles</th>
         <th>Name</th>
         <th>Email</th>
     </tr>
-    <div sec:authorize="hasAuthority('ADMIN')">
-        <td th:text="${user.id}"></td>
-    </div>
-    <td th:text="${user.username}"></td>
-    <td th:password="${user.password}" th:text="'********'"></td>
-    <div sec:authorize="hasAuthority('ADMIN')">
-        <td th:text="${user.roles}"></td>
-    </div>
-    <td th:text="${user.name}"></td>
-    <td th:text="${user.email}"></td>
+
+    <td th:text="${user.getId()}"></td>
+    <td th:text="${user.getPassword()}"></td>
+    <td th:password="${user.getPassword()}" th:text="'********'"></td>
+    <td th:text="${user.getRoles()}"></td>
+    <td th:text="${user.getName()}"></td>
+    <td th:text="${user.getEmail()}"></td>
+
     </tbody>
 </table>
 <br/>
-<div sec:authorize="hasAuthority('ADMIN')">
-    <a th:href="@{/admin/{id}/edit(id=${user.id})}">Edit user</a>
-    <p>
-        <form th:method="DELETE" th:action="@{'/admin/'+${user.id}}">
-        <input type="submit" value="Delete user"/>
-    </form>
-    </p>
-</div>
+
 <p>
 <form method="POST" th:action="@{/logout}" >
     <input type="submit" value="Logout"/>

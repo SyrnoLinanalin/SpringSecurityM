@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -21,36 +22,32 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Transactional
     public void save(User user) {
         entityManager.persist(entityManager.merge(user));
     }
 
     @Override
-    @Transactional
     public User getById(Long id) {
         return entityManager.find(User.class, id);
     }
 
     @Override
-    @Transactional
     public void update(User user) {
         entityManager.merge(user);
     }
 
     @Override
-    @Transactional
     public void delete(User user) {
         User managed = entityManager.merge(user);
         entityManager.remove(managed);
     }
 
     @Override
-    public User getUserByName(String username) {
+    public Optional<User> getUserByName(String username) {
         try {
-            return entityManager.createQuery("SELECT u FROM User u where u.username = :username", User.class)
+            return Optional.ofNullable(entityManager.createQuery("SELECT u FROM User u where u.username = :username", User.class)
                     .setParameter("username", username)
-                    .getSingleResult();
+                    .getSingleResult());
         } catch (NoResultException e) {
             e.printStackTrace();
             return null;

@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminController {
     private final UserService userService;
     private final RoleDAO roleDAO;
-    private final PasswordEncoder bCryptPasswordEncoder;
 
-    public AdminController(UserService userService, RoleDAO roleDAO, PasswordEncoder bCryptPasswordEncoder) {
+
+    public AdminController(UserService userService, RoleDAO roleDAO) {
         this.userService = userService;
         this.roleDAO = roleDAO;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+
     }
 
     @GetMapping
@@ -72,7 +72,5 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    public PasswordEncoder getbCryptPasswordEncoder() {
-        return bCryptPasswordEncoder;
-    }
+
 }

@@ -6,14 +6,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import web.dao.RoleDAO;
 import web.dao.UserDAO;
 import web.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+@Transactional
+public class UserServiceImpl implements UserService {
+
     private UserDAO userDAO;
     private RoleDAO roleDAO;
 
@@ -60,8 +64,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userDAO.delete(user);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userDAO.getUserByName(username);
-    }
+
+
+
+
 }
