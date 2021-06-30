@@ -1,5 +1,6 @@
 package web.dao;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
@@ -44,13 +45,12 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Optional<User> getUserByName(String username) {
-        try {
-            return Optional.ofNullable(entityManager.createQuery("SELECT u FROM User u where u.username = :username", User.class)
+
+         Optional<User> user = Optional.ofNullable(entityManager.createQuery("SELECT u FROM User u where u.username = :username", User.class)
                     .setParameter("username", username)
                     .getSingleResult());
-        } catch (NoResultException e) {
-            e.printStackTrace();
-            return null;
+         return user;
+
         }
     }
-}
+

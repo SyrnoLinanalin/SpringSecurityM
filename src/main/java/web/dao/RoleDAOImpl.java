@@ -1,5 +1,6 @@
 package web.dao;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import web.model.Role;
@@ -11,7 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-@Transactional
 public class RoleDAOImpl implements RoleDAO {
     @PersistenceContext
     private EntityManager entityManager;
@@ -38,14 +38,13 @@ public class RoleDAOImpl implements RoleDAO {
 
     @Override
     public Role getRoleByName(String rolename) {
-        try{
-            return entityManager.createQuery("SELECT r FROM Role r where r.name = :name", Role.class)
+
+        return entityManager.createQuery("SELECT  r FROM Role r  where r.name  = :name", Role.class)
                     .setParameter("name", rolename)
                     .getSingleResult();
-        } catch (NoResultException ex){
-            return null;
+
         }
-    }
+
 
     public Set<Role> getRoleSet() {
         try{
