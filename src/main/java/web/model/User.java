@@ -25,7 +25,7 @@ public class User implements UserDetails {
     String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;

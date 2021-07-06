@@ -3,6 +3,7 @@ package web.dao;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import web.model.Role;
 import web.model.User;
 
 import javax.persistence.EntityManager;
@@ -19,7 +20,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> allUsers() {
-        return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
+        return entityManager.createQuery("SELECT u FROM User u join fetch u.roles",  User.class).getResultList();
     }
 
     @Override
@@ -46,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Optional<User> getUserByName(String username) {
 
-         Optional<User> user = Optional.ofNullable(entityManager.createQuery("SELECT u FROM User u where u.username = :username", User.class)
+         Optional<User> user = Optional.ofNullable(entityManager.createQuery("SELECT u FROM User u join fetch u.roles where u.username = :username ", User.class)
                     .setParameter("username", username)
                     .getSingleResult());
          return user;
